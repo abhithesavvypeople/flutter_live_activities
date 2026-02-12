@@ -119,15 +119,15 @@ open class LiveActivityManager(private val context: Context) {
 
         val existingNotification = notificationManager.getActiveNotifications()
             .firstOrNull {
-                it.tag == activityTag &&
+                it.id == notificationId &&
                 it.notification.channelId == channelName
             }
 
         if (existingNotification != null) {
-            updateActivity(activityTag, timestamp, data)
-            return activityTag
+            updateActivity(activityId, activityTag, timestamp, data)
+            return activityId
         } else {
-            return createActivity(activityTag, timestamp, data)
+            return createActivity(activityId, activityTag, timestamp, data)
         }
     }
 
@@ -147,7 +147,7 @@ open class LiveActivityManager(private val context: Context) {
         // Check if existing notification has a newer or equal timestamp
         val existingNotification = notificationManager.getActiveNotifications()
             .firstOrNull {
-                it.tag == activityTag &&
+                it.id == notificationId &&
                 it.notification.channelId == channelName
             }
 
@@ -155,7 +155,7 @@ open class LiveActivityManager(private val context: Context) {
         if (existingTimestamp >= timestamp) {
             Log.w(
                 "LiveActivityManager",
-                "Attempted to update activity with ID $activityTag but the timestamp is not newer than the existing one."
+                "Attempted to update activity with ID $activityId but the timestamp is not newer than the existing one."
             )
             return
         }
