@@ -69,13 +69,14 @@ open class LiveActivityManager(private val context: Context) {
     }
 
     suspend fun createActivity(
-        activityTag: String,
+        activityId: String,
+        activityTag: String?,
         timestamp: Long,
         data: Map<String, Any>
     ): String? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null;
 
-        val notificationId = getNotificationIdFromString(activityTag)
+        val notificationId = getNotificationIdFromString(activityId)
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -100,11 +101,12 @@ open class LiveActivityManager(private val context: Context) {
             return null
         }
 
-        return activityTag
+        return activityId
     }
 
     suspend fun createOrUpdateActivity(
-        activityTag: String,
+        activityId: String,
+        activityTag: String?,
         timestamp: Long,
         data: Map<String, Any>
     ): String? {
@@ -130,13 +132,14 @@ open class LiveActivityManager(private val context: Context) {
     }
 
     suspend fun updateActivity(
-        activityTag: String,
+        activityId: String,
+        activityTag: String?,
         timestamp: Long,
         data: Map<String, Any>
     ) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
-        val notificationId = getNotificationIdFromString(activityTag)
+        val notificationId = getNotificationIdFromString(activityId)
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -179,12 +182,13 @@ open class LiveActivityManager(private val context: Context) {
     }
 
     fun endActivity(
-        activityTag: String,
+        activityId: String,
+        activityTag: String?,
         data: Map<String, Any>
     ) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
-        val notificationId = getNotificationIdFromString(activityTag)
+        val notificationId = getNotificationIdFromString(activityId)
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

@@ -32,6 +32,7 @@ abstract class LiveActivitiesPlatform extends PlatformInterface {
 
   Future<String?> createActivity(
     String activityId,
+    String? activityTag,
     Map<String, dynamic> data, {
     bool removeWhenAppIsKilled = false,
     bool iOSEnableRemoteUpdates = true,
@@ -42,6 +43,7 @@ abstract class LiveActivitiesPlatform extends PlatformInterface {
 
   Future updateActivity(
     String activityId,
+    String? activityTag,
     Map<String, dynamic> data, [
     AlertConfig? alertConfig,
   ]) {
@@ -50,6 +52,7 @@ abstract class LiveActivitiesPlatform extends PlatformInterface {
 
   Future createOrUpdateActivity(
     String activityId,
+    String? activityTag,
     Map<String, dynamic> data, {
     bool removeWhenAppIsKilled = false,
     bool iOSEnableRemoteUpdates = true,
@@ -60,7 +63,7 @@ abstract class LiveActivitiesPlatform extends PlatformInterface {
     );
   }
 
-  Future endActivity(String activityId) {
+  Future endActivity(String activityId, String? activityTag) {
     throw UnimplementedError('endActivity() has not been implemented.');
   }
 

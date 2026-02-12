@@ -729,6 +729,7 @@ FCM example payload :
     "event": eventType,                 // Required, can be "start", "update" or "end"
     "content-state": JSON.stringify({   // Dynamic data to be passed to the Live Activity, must be stringified
     "activity-id": "live_activity_id",  // Required, it must be a String, you should use a something like match.id
+    "activity-tag": "live_activity_tag",  // Optional, it must be a String, you should use a something like match.tag
     "teamAName": "Team A",
     "teamBName": "Team B",
     "teamAScore": 0,

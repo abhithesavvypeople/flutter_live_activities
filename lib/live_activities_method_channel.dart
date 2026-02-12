@@ -40,6 +40,7 @@ class MethodChannelLiveActivities extends LiveActivitiesPlatform {
   @override
   Future<String?> createActivity(
     String activityId,
+    String? activityTag,
     Map<String, dynamic> data, {
     bool removeWhenAppIsKilled = false,
     bool iOSEnableRemoteUpdates = true,
@@ -51,6 +52,7 @@ class MethodChannelLiveActivities extends LiveActivitiesPlatform {
         : null;
     return methodChannel.invokeMethod<String>('createActivity', {
       'activityId': activityId,
+      'activityTag': activityTag,
       'data': data,
       'removeWhenAppIsKilled': removeWhenAppIsKilled,
       'enableRemoteUpdates': iOSEnableRemoteUpdates,
@@ -61,11 +63,13 @@ class MethodChannelLiveActivities extends LiveActivitiesPlatform {
   @override
   Future updateActivity(
     String activityId,
+    String? activityTag,
     Map<String, dynamic> data, [
     AlertConfig? alertConfig,
   ]) async {
     return methodChannel.invokeMethod('updateActivity', {
       'activityId': activityId,
+      'activityTag': activityTag,
       'data': data,
       'alertConfig': alertConfig?.toMap(),
     });
@@ -74,6 +78,7 @@ class MethodChannelLiveActivities extends LiveActivitiesPlatform {
   @override
   Future createOrUpdateActivity(
     String activityId,
+    String? activityTag,
     Map<String, dynamic> data, {
     bool removeWhenAppIsKilled = false,
     bool iOSEnableRemoteUpdates = true,
@@ -84,6 +89,7 @@ class MethodChannelLiveActivities extends LiveActivitiesPlatform {
         : null;
     return methodChannel.invokeMethod('createOrUpdateActivity', {
       'activityId': activityId,
+      'activityTag': activityTag,
       'data': data,
       'removeWhenAppIsKilled': removeWhenAppIsKilled,
       'enableRemoteUpdates': iOSEnableRemoteUpdates,
@@ -92,9 +98,10 @@ class MethodChannelLiveActivities extends LiveActivitiesPlatform {
   }
 
   @override
-  Future endActivity(String activityId) async {
+  Future endActivity(String activityId, String? activityTag) async {
     return methodChannel.invokeMethod('endActivity', {
       'activityId': activityId,
+      'activityTag': activityTag,
     });
   }
 
