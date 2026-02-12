@@ -112,7 +112,7 @@ open class LiveActivityManager(private val context: Context) {
     ): String? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null
 
-        val notificationId = getNotificationIdFromString(activityTag)
+        val notificationId = getNotificationIdFromString(activityId)
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

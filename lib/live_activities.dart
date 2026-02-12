@@ -56,6 +56,7 @@ class LiveActivities {
   Future<String?> createActivity(
     String activityId,
     Map<String, dynamic> data, {
+    String? activityTag,
     bool removeWhenAppIsKilled = false,
     bool iOSEnableRemoteUpdates = true,
     Duration? staleIn,
@@ -65,6 +66,7 @@ class LiveActivities {
     }
     return LiveActivitiesPlatform.instance.createActivity(
       activityId,
+      activityTag,
       data,
       removeWhenAppIsKilled: removeWhenAppIsKilled,
       iOSEnableRemoteUpdates: iOSEnableRemoteUpdates,
@@ -78,14 +80,16 @@ class LiveActivities {
   /// Map is limited to String keys and values for now.
   Future updateActivity(
     String activityId,
-    Map<String, dynamic> data, [
+    Map<String, dynamic> data, {
+    String? activityTag,
     AlertConfig? alertConfig,
-  ]) async {
+  }) async {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
       await _appGroupsFileService.sendFilesToAppGroups(data);
     }
     return LiveActivitiesPlatform.instance.updateActivity(
       activityId,
+      activityTag,
       data,
       alertConfig,
     );
@@ -94,6 +98,7 @@ class LiveActivities {
   Future createOrUpdateActivity(
     String activityId,
     Map<String, dynamic> data, {
+    String? activityTag,
     bool removeWhenAppIsKilled = false,
     bool iOSEnableRemoteUpdates = true,
     Duration? staleIn,
@@ -103,6 +108,7 @@ class LiveActivities {
     }
     return LiveActivitiesPlatform.instance.createOrUpdateActivity(
       activityId,
+      activityTag,
       data,
       removeWhenAppIsKilled: removeWhenAppIsKilled,
       iOSEnableRemoteUpdates: iOSEnableRemoteUpdates,
@@ -112,8 +118,8 @@ class LiveActivities {
 
   /// End an iOS 16.1+ live activity.
   /// You can get an activity id by calling [createActivity].
-  Future endActivity(String activityId) {
-    return LiveActivitiesPlatform.instance.endActivity(activityId);
+  Future endActivity(String activityId, {String? activityTag}) {
+    return LiveActivitiesPlatform.instance.endActivity(activityId, activityTag);
   }
 
   /// Get the activity state.

@@ -34,15 +34,15 @@ void main() {
   });
 
   test('createActivity', () async {
-    expect(await platform.createActivity('ACTIVITY_ID', {}), 'ACTIVITY_ID');
+    expect(await platform.createActivity('ACTIVITY_ID', null, {}), 'ACTIVITY_ID');
   });
 
   test('updateActivity', () async {
-    expect(await platform.updateActivity('ACTIVITY_ID', {}), null);
+    expect(await platform.updateActivity('ACTIVITY_ID', null, {}), null);
   });
 
   test('endActivity', () async {
-    expect(await platform.endActivity('ACTIVITY_ID'), null);
+    expect(await platform.endActivity('ACTIVITY_ID', null), null);
   });
 
   test('endAllActivities', () async {
