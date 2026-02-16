@@ -38,11 +38,14 @@ class LiveActivitiesPlugin : FlutterPlugin, MethodCallHandler {
 
                 "createActivity" -> {
                     val timestamp = System.currentTimeMillis()
+                  
                     val id = args["activityId"] as String
+                    val tag = args["activityTag"] as String?
 
                     pluginScope.launch {
                         val notificationId = liveActivityManager.createActivity(
                             id,
+                            tag,
                             timestamp,
                             data
                         )
@@ -52,11 +55,14 @@ class LiveActivitiesPlugin : FlutterPlugin, MethodCallHandler {
 
                 "createOrUpdateActivity" -> {
                     val timestamp = System.currentTimeMillis()
+
                     val id = args["activityId"] as String
+                    val tag = args["activityTag"] as String?
 
                     pluginScope.launch {
                         val notificationId = liveActivityManager.createOrUpdateActivity(
                             id,
+                            tag,
                             timestamp,
                             data
                         )
@@ -67,17 +73,19 @@ class LiveActivitiesPlugin : FlutterPlugin, MethodCallHandler {
                 "updateActivity" -> {
                     val timestamp = System.currentTimeMillis()
                     val id = args["activityId"] as String
+                    val tag = args["activityTag"] as String?
 
                     pluginScope.launch {
-                        liveActivityManager.updateActivity(id, timestamp, data)
+                        liveActivityManager.updateActivity(id, tag, timestamp, data)
                         result.success("activity/updated")
                     }
                 }
 
                 "endActivity" -> {
                     val id = args["activityId"] as String
+                    val tag = args["activityTag"] as String?
 
-                    liveActivityManager.endActivity(id, data)
+                    liveActivityManager.endActivity(id, tag, data)
                     result.success("activity/ended")
                 }
 

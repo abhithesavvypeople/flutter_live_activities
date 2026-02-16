@@ -19,6 +19,7 @@ class MockLiveActivitiesPlatform
   @override
   Future<String?> createActivity(
     String activityId,
+    String? activityTag,
     Map<String, dynamic> data, {
     bool removeWhenAppIsKilled = false,
     bool iOSEnableRemoteUpdates = true,
@@ -28,7 +29,7 @@ class MockLiveActivitiesPlatform
   }
 
   @override
-  Future endActivity(String activityId) {
+  Future endActivity(String activityId, String? activityTag) {
     return Future.value();
   }
 
@@ -90,6 +91,7 @@ class MockLiveActivitiesPlatform
   @override
   Future updateActivity(
     String activityId,
+    String? activityTag,
     Map<String, dynamic> data, [
     AlertConfig? alertConfig,
   ]) {
@@ -104,6 +106,7 @@ class MockLiveActivitiesPlatform
   @override
   Future createOrUpdateActivity(
     String customId,
+    String? activityTag,
     Map<String, dynamic> data, {
     bool removeWhenAppIsKilled = false,
     bool iOSEnableRemoteUpdates = true,
