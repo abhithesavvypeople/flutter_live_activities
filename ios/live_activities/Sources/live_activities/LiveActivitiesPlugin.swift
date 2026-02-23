@@ -442,7 +442,7 @@ public class LiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
         }
     }
     
-    public func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    private func handleURL(_ url: URL) -> Bool {
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         
         if components?.scheme == nil || components?.scheme != urlScheme { return false }
@@ -462,6 +462,12 @@ public class LiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
         
         urlSchemeSink?.self(queryResult)
         return true
+    }
+    
+    @objc
+    public func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else { return }
+        _ = handleURL(url)
     }
     
     public func applicationWillTerminate(_ application: UIApplication) {
