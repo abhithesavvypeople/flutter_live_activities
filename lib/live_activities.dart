@@ -49,7 +49,7 @@ class LiveActivities {
   /// [StaleIn] indicates if a StaleDate should be added to the activity. If the value is null or the Duration
   /// is less than 1 minute then no staleDate will be used. The parameter only affects the live activity on
   /// iOS 16.2+ and does nothing on on iOS 16.1
-  /// 
+  ///
   /// [iOSEnableRemoteUpdates] indicates if the live activity should allow remote updates via push notifications.
   /// Default is true. If set to false, the live activity will not receive remote updates.
   /// If set to true, Push Notifications capability must be enabled in your Xcode project.

@@ -34,7 +34,10 @@ void main() {
   });
 
   test('createActivity', () async {
-    expect(await platform.createActivity('ACTIVITY_ID', null, {}), 'ACTIVITY_ID');
+    expect(
+      await platform.createActivity('ACTIVITY_ID', null, {}),
+      'ACTIVITY_ID',
+    );
   });
 
   test('updateActivity', () async {
