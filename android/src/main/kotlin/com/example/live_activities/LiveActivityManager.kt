@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.service.notification.StatusBarNotification
 import androidx.core.app.NotificationManagerCompat
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -44,6 +45,16 @@ open class LiveActivityManager(private val context: Context) {
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    // Safely calls getActiveNotifications(), returning an empty array if the system server is dead.
+    private fun NotificationManager.safeGetActiveNotifications(): Array<StatusBarNotification> {
+        return try {
+            getActiveNotifications()
+        } catch (e: Exception) {
+            Log.e("LiveActivityManager", "Failed to get active notifications: ${e.message}")
+            emptyArray()
         }
     }
 
@@ -117,7 +128,7 @@ open class LiveActivityManager(private val context: Context) {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val existingNotification = notificationManager.getActiveNotifications()
+        val existingNotification = notificationManager.safeGetActiveNotifications()
             .firstOrNull {
                 it.id == notificationId &&
                 it.notification.channelId == channelName
@@ -145,7 +156,7 @@ open class LiveActivityManager(private val context: Context) {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Check if existing notification has a newer or equal timestamp
-        val existingNotification = notificationManager.getActiveNotifications()
+        val existingNotification = notificationManager.safeGetActiveNotifications()
             .firstOrNull {
                 it.id == notificationId &&
                 it.notification.channelId == channelName
@@ -202,7 +213,7 @@ open class LiveActivityManager(private val context: Context) {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        notificationManager.getActiveNotifications()
+        notificationManager.safeGetActiveNotifications()
             .filter { statusBarNotification ->
                 statusBarNotification.notification.channelId == channelName
             }
@@ -217,7 +228,7 @@ open class LiveActivityManager(private val context: Context) {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        return notificationManager.getActiveNotifications()
+        return notificationManager.safeGetActiveNotifications()
             .filter { statusBarNotification ->
                 statusBarNotification.notification.channelId == channelName
             }
