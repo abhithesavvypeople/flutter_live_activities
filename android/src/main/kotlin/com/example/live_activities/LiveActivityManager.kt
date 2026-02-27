@@ -25,7 +25,7 @@ open class LiveActivityManager(private val context: Context) {
     private fun createNotificationChannel(
         channelName: String,
         channelDescription: String,
-        channelImportance: Int = NotificationManager.IMPORTANCE_LOW,
+        channelImportance: Int = NotificationManager.IMPORTANCE_HIGH,
     ) {
         this.channelName = channelName
         val existingChannel =
@@ -36,8 +36,6 @@ open class LiveActivityManager(private val context: Context) {
             val channel = NotificationChannel(
                 channelName, channelDescription, channelImportance
             ).apply {
-                setSound(null, null)
-                enableVibration(false)
                 setShowBadge(false)
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             }
@@ -177,6 +175,9 @@ open class LiveActivityManager(private val context: Context) {
         if (areNotificationsEnabled) {
             val builder = Notification.Builder(context, channelName)
             builder.extras.putLong("activity_timestamp", timestamp)
+            // setOnlyAlertOnce(true): since the notification ID already exists,
+            // Android will not re-trigger sound, vibration, or heads-up on this update.
+            builder.setOnlyAlertOnce(true)
 
             notificationManager.notify(
                 activityTag,
